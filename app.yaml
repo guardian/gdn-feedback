@@ -11,7 +11,10 @@ handlers:
   script: admin.app
   login: admin
   secure: always
+- url: /
+  script: app.app
 - url: /.*
+  login: required
   script: app.app
 
 libraries:

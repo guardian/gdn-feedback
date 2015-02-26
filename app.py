@@ -17,5 +17,15 @@ class MainPage(webapp2.RequestHandler):
 
 		self.response.out.write(template.render(template_values))
 
-app = webapp2.WSGIApplication([webapp2.Route(r'/', handler=MainPage)],
-                              debug=True)
+class Dashboard(webapp2.RequestHandler):
+	def get(self):
+		template = jinja_environment.get_template('dashboard.html')
+		
+		template_values = {}
+
+		self.response.out.write(template.render(template_values))
+
+app = webapp2.WSGIApplication([
+	webapp2.Route(r'/', handler=MainPage),
+	webapp2.Route(r'/dashboard', handler=Dashboard)
+	], debug=True)
