@@ -25,16 +25,17 @@ class Dashboard(webapp2.RequestHandler):
 
 		self.response.out.write(template.render(template_values))
 
-class Interview(webapp2.RequestHandler):
+class RequestFeedback(webapp2.RequestHandler):
 	def get(self):
-		template = jinja_environment.get_template('interview.html')
+		template = jinja_environment.get_template('request.html')
 		
 		template_values = {}
 
 		self.response.out.write(template.render(template_values))
 
+
 app = webapp2.WSGIApplication([
 	webapp2.Route(r'/', handler=MainPage),
 	webapp2.Route(r'/dashboard', handler=Dashboard),
-	webapp2.Route(r'/interview', handler=Interview),
+	webapp2.Route(r'/request', handler=RequestFeedback),
 	], debug=True)
