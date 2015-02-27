@@ -33,6 +33,13 @@ class RequestFeedback(webapp2.RequestHandler):
 
 		self.response.out.write(template.render(template_values))
 
+	def post(self):
+
+		template = jinja_environment.get_template('request-created.html')
+		
+		template_values = {}
+
+		self.response.out.write(template.render(template_values))
 
 app = webapp2.WSGIApplication([
 	webapp2.Route(r'/', handler=MainPage),
