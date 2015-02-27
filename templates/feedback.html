@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h1>Feedback</h1>
+
+			<p>Provide feedback for <em>Shannon</em> for the <em>2014-2015 year-end review</em></p>
+
+			<form method="POST">
+				<div class="form-group">
+				<label for="start">What should they start doing?</label>
+				<textarea id="start" name="start" class="form-control" rows="4" required></textarea>
+				</div>
+
+				<div class="form-group">
+				<label for="email">What should they continue doing?</label>
+				<textarea id="continue" name="continue" class="form-control" rows="4" ></textarea>
+				</div>
+
+				<div class="form-group">
+				<label for="stop">What should they stop doing?</label>
+				<textarea id="stop" name="stop" class="form-control" rows="4" ></textarea>
+				</div>
+				<button>Provide feedback</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
