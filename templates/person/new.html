@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h1>Add a person </h1>
+
+			<p>Add a person</p>
+
+			<form method="POST">
+
+				<div class="form-group">
+				<label for="name">Name</label>
+				<input type="text" id="name" name="name" class="form-control"/>
+				</div>
+
+				<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" id="email" name="email" class="form-control"/>
+				</div>
+
+				<button>Add</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
