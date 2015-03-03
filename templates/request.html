@@ -12,8 +12,12 @@
 
 			<form method="POST">
 				<div class="form-group">
-				<label for="email">Person's email</label>
-				<input type="email" id="email" name="email" class="form-control" required>
+				<label for="person">Person</label>
+				<select id="person" name="person_key">
+					{% for person in people %}
+					<option value="{{person.key.urlsafe()}}">{{person.name}}</option>
+					{% endfor %}
+				</select>
 				</div>
 
 				<div class="form-group">

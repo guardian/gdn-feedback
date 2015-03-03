@@ -8,7 +8,7 @@ from urllib import quote, urlencode
 from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 
-from models import Person
+import models
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
@@ -33,7 +33,10 @@ class RequestFeedback(webapp2.RequestHandler):
 	def get(self):
 		template = jinja_environment.get_template('request.html')
 		
-		template_values = {}
+		people = [p for p in models.Person.query()]
+		template_values = {
+			'people': people,
+		}
 
 		self.response.out.write(template.render(template_values))
 
@@ -74,10 +77,10 @@ class NewPerson(webapp2.RequestHandler):
 		name = self.request.get('name')
 		email = self.request.get('email')
 
-		person = Person.query(Person.email == email).get()
+		person = models.Person.query(models.Person.email == email).get()
 
 		if not person:
-			person = Person(name=name, email=email)
+			person = models.Person(name=name, email=email)
 			person.put()
 
 		return webapp2.redirect('/person/' + person.key.urlsafe())
