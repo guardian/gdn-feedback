@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{person.name}}{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>{{person.name}}</h1>
+
+			<dl>
+				<dt>Name</dt>
+				<dd>{{person.name}}</dd>
+				<dt>Email</dt>
+				<dd>{{person.email}}</dd>
+			</dl>
+
+			<ul>
+				<li><a href="/person/{{person.key.urlsafe()}}/request">Request feedback for {{person.name}}</a></li>
+			</ul>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}

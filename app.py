@@ -82,10 +82,21 @@ class NewPerson(webapp2.RequestHandler):
 
 		return webapp2.redirect('/person/' + person.key.urlsafe())
 
+class Person(webapp2.RequestHandler):
+	def get(self, key):
+		template = jinja_environment.get_template('person/index.html')
+		
+		template_values = {
+			'person': ndb.Key(urlsafe=key).get(),
+		}
+
+		self.response.out.write(template.render(template_values))
+
 app = webapp2.WSGIApplication([
 	webapp2.Route(r'/', handler=MainPage),
 	webapp2.Route(r'/dashboard', handler=Dashboard),
 	webapp2.Route(r'/request', handler=RequestFeedback),
 	webapp2.Route(r'/request/key', handler=Feedback),
 	webapp2.Route(r'/person', handler=NewPerson),
+	webapp2.Route(r'/person/<key>', handler=Person),
 	], debug=True)
