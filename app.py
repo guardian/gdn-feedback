@@ -9,6 +9,7 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 
 import models
+import feedback
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
@@ -36,6 +37,7 @@ class RequestFeedback(webapp2.RequestHandler):
 		people = [p for p in models.Person.query()]
 		template_values = {
 			'people': people,
+			'formats': feedback.formats,
 		}
 
 		self.response.out.write(template.render(template_values))
@@ -51,6 +53,8 @@ class RequestFeedback(webapp2.RequestHandler):
 class Feedback(webapp2.RequestHandler):
 	def get(self):
 		template = jinja_environment.get_template('feedback.html')
+
+		logging.info(feedback.formats)
 		
 		template_values = {}
 

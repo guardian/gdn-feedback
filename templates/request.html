@@ -28,9 +28,9 @@
 				<div class="form-group">
 				<label for="format">Feedback format</label>
 				<select id="format" name="format" class="form-control">
-					<option>Start - Continue - Stop</option>
-					<option>AID</option>
-					<option>Impact</option>
+					{% for format in formats %}
+					<option>{{format}}</option>
+					{% endfor %}
 				</select>
 				</div>
 
