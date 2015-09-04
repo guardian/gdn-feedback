@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Request feedback{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h1>Request feedback</h1>
+
+			<p>Request feedback for someone</p>
+
+			<form method="POST">
+				<div class="form-group">
+				<label for="person">Person</label>
+				<select id="person" name="person_key">
+					{% for person in people %}
+					<option value="{{person.key.urlsafe()}}">{{person.name}}</option>
+					{% endfor %}
+				</select>
+				</div>
+
+				<div class="form-group">
+				<label for="description">Description</label>
+				<input type="description" id="description" name="description" class="form-control" required>
+				</div>
+				
+				<button class="btn btn-default">Request feedback</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

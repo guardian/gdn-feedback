@@ -17,6 +17,11 @@ jinja_environment = jinja2.Environment(
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
+		user = users.get_current_user()
+
+		if user:
+			return webapp2.redirect('/dashboard')
+
 		template = jinja_environment.get_template('index.html')
 		
 		template_values = {}
@@ -25,6 +30,7 @@ class MainPage(webapp2.RequestHandler):
 
 class Dashboard(webapp2.RequestHandler):
 	def get(self):
+
 		template = jinja_environment.get_template('dashboard.html')
 		
 		template_values = {}
@@ -33,9 +39,9 @@ class Dashboard(webapp2.RequestHandler):
 
 class RequestFeedback(webapp2.RequestHandler):
 	def get(self):
-		template = jinja_environment.get_template('request.html')
+		template = jinja_environment.get_template('feedback/request.html')
 		
-		people = [p for p in models.Person.query()]
+		people = [p for p in models.everyone()]
 		template_values = {
 			'people': people,
 			'formats': feedback.formats,

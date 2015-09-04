@@ -59,7 +59,7 @@ def current_feedback(provider, request):
 	return feedback
 
 def everyone():
-	return Person.query()
+	return Person.query().order(Person.name)
 
 def requests(user):
 	return FeedbackRequest.query().filter(FeedbackRequest.requester == user)
