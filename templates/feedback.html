@@ -14,7 +14,7 @@
 				{% for question in request.questions %}
 				<div class="form-group">
 				<label for="q{{loop.index}}">{{question}}</label>
-				<textarea id="q{{loop.index}}" name="question" class="form-control" rows="4" required></textarea>
+				<textarea id="q{{loop.index}}" name="{{question}}" class="form-control" rows="4" required>{% if question in feedback %}{{feedback[question]}}{% endif %}</textarea>
 				</div>
 				{% endfor %}
 				<button class="btn btn-default">Provide feedback</button>

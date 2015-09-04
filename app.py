@@ -52,29 +52,39 @@ class RequestFeedback(webapp2.RequestHandler):
 		self.response.out.write(template.render(template_values))
 
 class Feedback(webapp2.RequestHandler):
-	def get(self, key):
+	def get(self, request_id):
 		template = jinja_environment.get_template('feedback.html')
 
 		user = users.get_current_user()
 
-		logging.info(user)
-		
 		template_values = {
+			'feedback': {}
 		}
 
-		if key:
-			template_values['request'] = models.read(key)
+
+		if request_id:
+			request = models.read(request_id)
+			template_values['request'] = request
+			template_values['feedback'] = models.current_feedback(user, request)
+
 
 		self.response.out.write(template.render(template_values))
 
-	def post(self):
+	def post(self, request_id):
 		user = users.get_current_user()
+		request = models.read(request_id)
 
-		template = jinja_environment.get_template('feedback-created.html')
-		
-		template_values = {}
+		for q in request.questions:
+			feedback = self.request.POST.get(q)
+			if not feedback:
+				continue
 
-		self.response.out.write(template.render(template_values))
+			saved_feedback = models.feedback(user, request, q, feedback)
+
+			saved_feedback.feedback = feedback
+			saved_feedback.put()
+
+		return webapp2.redirect('/request/{0}'.format(request_id))
 
 class NewPerson(webapp2.RequestHandler):
 	def get(self):
@@ -107,11 +117,22 @@ class Person(webapp2.RequestHandler):
 
 		self.response.out.write(template.render(template_values))
 
+class People(webapp2.RequestHandler):
+	def get(self):
+		template = jinja_environment.get_template('person/list.html')
+		
+		template_values = {
+			'people': models.everyone()
+		}
+
+		self.response.out.write(template.render(template_values))
+
 app = webapp2.WSGIApplication([
 	webapp2.Route(r'/', handler=MainPage),
 	webapp2.Route(r'/dashboard', handler=Dashboard),
 	webapp2.Route(r'/request', handler=RequestFeedback),
-	webapp2.Route(r'/request/<key>', handler=Feedback),
+	webapp2.Route(r'/request/<request_id>', handler=Feedback),
+	webapp2.Route(r'/people', handler=People),
 	webapp2.Route(r'/person', handler=NewPerson),
 	webapp2.Route(r'/person/<key>', handler=Person),
 	webapp2.Route(r'/person/<person_id>/request', handler=handlers.RequestFeedbackOnPerson),
