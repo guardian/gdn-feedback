@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Feedback summary{% endblock %}
+
+{% block content %}
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-12">
+			<h1>{{request.subject.get().name}}</h1>
+			<p>{{request.description}}</p>
+		</div>
+
+		{% for response in responses %}
+		<div class="col-md-12">
+			<ul>
+				<li>{{response.provider}}</li>
+				<li>{{response.question}}</li>
+				<li><pre>{{response.feedback}}</pre></li>
+			</ul>
+		</div>
+		{% endfor %}
+	</div>
+
+</div>
+
+{% endblock %}

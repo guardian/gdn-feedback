@@ -63,3 +63,6 @@ def everyone():
 
 def requests(user):
 	return FeedbackRequest.query().filter(FeedbackRequest.requester == user)
+
+def all_feedback(request):
+	return Feedback.query().filter(Feedback.request == request.key)

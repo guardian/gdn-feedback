@@ -58,3 +58,20 @@ class YourRequests(webapp2.RequestHandler):
 		}
 
 		self.response.out.write(template.render(template_values))
+
+class FeedbackSummary(webapp2.RequestHandler):
+	def get(self, request_id):
+		user = users.get_current_user()
+		request = models.read(request_id)
+
+		if request.requester != user:
+			return webapp2.redirect('/dashboard')
+
+		template = jinja_environment.get_template('feedback/summary.html')
+		
+		template_values = {
+			'request': request,
+			'responses': models.all_feedback(request),
+		}
+
+		self.response.out.write(template.render(template_values))
