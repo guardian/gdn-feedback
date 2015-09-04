@@ -18,6 +18,7 @@ class FeedbackRequest(ndb.Model):
 	subject = ndb.KeyProperty(Person)
 	description = ndb.StringProperty()
 	questions = ndb.StringProperty(repeated=True)
+	active = ndb.BooleanProperty(default=True)
 
 class Feedback(ndb.Model):
 	provider = ndb.UserProperty(required=True)
@@ -59,3 +60,6 @@ def current_feedback(provider, request):
 
 def everyone():
 	return Person.query()
+
+def requests(user):
+	return FeedbackRequest.query().filter(FeedbackRequest.requester == user)

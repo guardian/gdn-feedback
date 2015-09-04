@@ -46,3 +46,15 @@ class RequestFeedbackOnPerson(webapp2.RequestHandler):
 		request.put()
 
 		return webapp2.redirect('/request/' + request.key.urlsafe())
+
+class YourRequests(webapp2.RequestHandler):
+	def get(self):
+		user = users.get_current_user()
+
+		template = jinja_environment.get_template('request/list.html')
+		
+		template_values = {
+			'requests': models.requests(user)
+		}
+
+		self.response.out.write(template.render(template_values))

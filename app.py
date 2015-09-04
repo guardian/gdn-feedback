@@ -62,10 +62,11 @@ class Feedback(webapp2.RequestHandler):
 		}
 
 
-		if request_id:
-			request = models.read(request_id)
-			template_values['request'] = request
-			template_values['feedback'] = models.current_feedback(user, request)
+		request = models.read(request_id)
+
+
+		template_values['request'] = request
+		template_values['feedback'] = models.current_feedback(user, request)
 
 
 		self.response.out.write(template.render(template_values))
@@ -136,4 +137,5 @@ app = webapp2.WSGIApplication([
 	webapp2.Route(r'/person', handler=NewPerson),
 	webapp2.Route(r'/person/<key>', handler=Person),
 	webapp2.Route(r'/person/<person_id>/request', handler=handlers.RequestFeedbackOnPerson),
+	webapp2.Route(r'/requests', handler=handlers.YourRequests),
 	], debug=True)
