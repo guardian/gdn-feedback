@@ -50,12 +50,20 @@ class RequestFeedback(webapp2.RequestHandler):
 		self.response.out.write(template.render(template_values))
 
 	def post(self):
+		user = users.get_current_user()
 
-		template = jinja_environment.get_template('request-created.html')
-		
-		template_values = {}
+		description = self.request.POST.get('description')
 
-		self.response.out.write(template.render(template_values))
+		person = models.read(person_id)
+
+		request = models.feedback_request(user,
+			person,
+			description,
+			feedback.standard_questions)
+
+		request.put()
+
+		return webapp2.redirect('/request/' + request.key.urlsafe())
 
 class Feedback(webapp2.RequestHandler):
 	def get(self, request_id):
@@ -64,7 +72,8 @@ class Feedback(webapp2.RequestHandler):
 		user = users.get_current_user()
 
 		template_values = {
-			'feedback': {}
+			'feedback': {},
+			'show_summary': False,
 		}
 
 
@@ -74,6 +83,8 @@ class Feedback(webapp2.RequestHandler):
 		template_values['request'] = request
 		template_values['feedback'] = models.current_feedback(user, request)
 
+		if request.requester == user:
+			template_values['show_summary'] = True
 
 		self.response.out.write(template.render(template_values))
 
