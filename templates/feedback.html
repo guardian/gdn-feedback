@@ -8,24 +8,16 @@
 		<div class="col-md-6">
 			<h1>Feedback</h1>
 
-			<p>Provide feedback for <em>Shannon</em> for the <em>2014-2015 year-end review</em></p>
+			<p>Provide feedback for <em>{{request.subject.name}}</em> for the <em>{{request.description}}</em></p>
 
 			<form method="POST">
+				{% for question in request.questions %}
 				<div class="form-group">
-				<label for="start">What should they start doing?</label>
-				<textarea id="start" name="start" class="form-control" rows="4" required></textarea>
+				<label for="q{{loop.index}}">{{question}}</label>
+				<textarea id="q{{loop.index}}" name="question" class="form-control" rows="4" required></textarea>
 				</div>
-
-				<div class="form-group">
-				<label for="continue">What should they continue doing?</label>
-				<textarea id="continue" name="continue" class="form-control" rows="4" ></textarea>
-				</div>
-
-				<div class="form-group">
-				<label for="stop">What should they stop doing?</label>
-				<textarea id="stop" name="stop" class="form-control" rows="4" ></textarea>
-				</div>
-				<button>Provide feedback</button>
+				{% endfor %}
+				<button class="btn btn-default">Provide feedback</button>
 			</form>
 		</div>
 	</div>

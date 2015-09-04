@@ -5,11 +5,12 @@ import json
 import logging
 from urllib import quote, urlencode
 
-from google.appengine.api import urlfetch
+from google.appengine.api import urlfetch, users
 from google.appengine.ext import ndb
 
 import models
 import feedback
+import handlers
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
@@ -51,16 +52,23 @@ class RequestFeedback(webapp2.RequestHandler):
 		self.response.out.write(template.render(template_values))
 
 class Feedback(webapp2.RequestHandler):
-	def get(self):
+	def get(self, key):
 		template = jinja_environment.get_template('feedback.html')
 
-		logging.info(feedback.formats)
+		user = users.get_current_user()
+
+		logging.info(user)
 		
-		template_values = {}
+		template_values = {
+		}
+
+		if key:
+			template_values['request'] = models.read(key)
 
 		self.response.out.write(template.render(template_values))
 
 	def post(self):
+		user = users.get_current_user()
 
 		template = jinja_environment.get_template('feedback-created.html')
 		
@@ -103,7 +111,8 @@ app = webapp2.WSGIApplication([
 	webapp2.Route(r'/', handler=MainPage),
 	webapp2.Route(r'/dashboard', handler=Dashboard),
 	webapp2.Route(r'/request', handler=RequestFeedback),
-	webapp2.Route(r'/request/key', handler=Feedback),
+	webapp2.Route(r'/request/<key>', handler=Feedback),
 	webapp2.Route(r'/person', handler=NewPerson),
 	webapp2.Route(r'/person/<key>', handler=Person),
+	webapp2.Route(r'/person/<person_id>/request', handler=handlers.RequestFeedbackOnPerson),
 	], debug=True)

@@ -25,16 +25,8 @@
 				<input type="description" id="description" name="description" class="form-control" required>
 				</div>
 
-				<div class="form-group">
-				<label for="format">Feedback format</label>
-				<select id="format" name="format" class="form-control">
-					{% for format in formats %}
-					<option>{{format}}</option>
-					{% endfor %}
-				</select>
-				</div>
-
-				<button>Request feedback</button>
+				<input type="hidden" name="person_id" value="{{person.key.urlsafe()}}">
+				<button class="btn btn-default">Request feedback</button>
 			</form>
 		</div>
 	</div>

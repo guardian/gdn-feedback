@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Request for feedback{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h1>Request feedback</h1>
+
+			<p>Request feedback for {{person.name}}</p>
+
+			<form method="POST">
+
+				<div class="form-group">
+				<label for="description">Description</label>
+				<input type="description" id="description" name="description" class="form-control" required>
+				</div>
+
+				<button class="btn btn-default">Create feedback request</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
