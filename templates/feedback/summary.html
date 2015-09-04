@@ -21,11 +21,9 @@
 			<dl>
 				<dt>{{question}}</dt>
 				<dl>
-					<ul>
-						{% for feedback in summary[question] %}
-						<li><pre>{{feedback}}</pre></li>
-						{% endfor %}
-					</ul>
+					{% for feedback in summary[question] %}
+					<section><pre>{{feedback}}</pre></section>
+					{% endfor %}
 				</dl>
 
 			</dl>
