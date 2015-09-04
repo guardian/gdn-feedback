@@ -75,6 +75,7 @@ class FeedbackSummary(webapp2.RequestHandler):
 			'request': request,
 			'responses': responses,
 			'respondees': {r.provider for r in responses},
+			'summary': feedback.summarise_feedback(responses),
 		}
 
 		self.response.out.write(template.render(template_values))

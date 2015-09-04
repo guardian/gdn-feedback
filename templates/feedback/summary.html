@@ -12,6 +12,30 @@
 			<p>Current responders: {{respondees | join(", ")}}</p>
 		</div>
 
+		{% if summary %}
+		<div class="col-md-12"><h2>Summary</h2></div>
+		{% endif %}
+
+		{% for question in summary.keys() %}
+		<div class="col-md-12">
+			<dl>
+				<dt>{{question}}</dt>
+				<dl>
+					<ul>
+						{% for feedback in summary[question] %}
+						<li><pre>{{feedback}}</pre></li>
+						{% endfor %}
+					</ul>
+				</dl>
+
+			</dl>
+		</div>
+		{% endfor %}
+
+		{% if responses %}
+		<div class="col-md-12"><h2>Breakdown</h2></div>
+		{% endif %}
+
 		{% for response in responses %}
 		<div class="col-md-12">
 			<ul>
