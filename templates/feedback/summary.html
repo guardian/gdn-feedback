@@ -9,6 +9,7 @@
 		<div class="col-md-12">
 			<h1>{{request.subject.get().name}}</h1>
 			<p>{{request.description}}</p>
+			<p>Current responders: {{respondees | join(", ")}}</p>
 		</div>
 
 		{% for response in responses %}

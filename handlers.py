@@ -68,10 +68,13 @@ class FeedbackSummary(webapp2.RequestHandler):
 			return webapp2.redirect('/dashboard')
 
 		template = jinja_environment.get_template('feedback/summary.html')
+
+		responses = models.all_feedback(request)
 		
 		template_values = {
 			'request': request,
-			'responses': models.all_feedback(request),
+			'responses': responses,
+			'respondees': {r.provider for r in responses},
 		}
 
 		self.response.out.write(template.render(template_values))
