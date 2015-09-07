@@ -14,6 +14,10 @@
 
 			<p>Provide feedback for <em>{{request.subject.name}}</em> for the <em>{{request.description}}</em></p>
 
+			{% if saved %}
+			<p class="text-success"><strong>Your feedback has been saved</strong></p>
+			{% endif %}
+
 			<form method="POST">
 				{% for question in request.questions %}
 				<div class="form-group">

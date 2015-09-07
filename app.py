@@ -74,6 +74,7 @@ class Feedback(webapp2.RequestHandler):
 		template_values = {
 			'feedback': {},
 			'show_summary': False,
+			'saved': False,
 		}
 
 
@@ -85,6 +86,11 @@ class Feedback(webapp2.RequestHandler):
 
 		if request.requester == user:
 			template_values['show_summary'] = True
+
+		status = self.request.get('status')
+
+		if status == 'saved':
+			template_values['saved'] = True
 
 		self.response.out.write(template.render(template_values))
 
@@ -102,7 +108,7 @@ class Feedback(webapp2.RequestHandler):
 			saved_feedback.feedback = feedback
 			saved_feedback.put()
 
-		return webapp2.redirect('/request/{0}'.format(request_id))
+		return webapp2.redirect('/request/{0}?status=saved'.format(request_id))
 
 class NewPerson(webapp2.RequestHandler):
 	def get(self):
