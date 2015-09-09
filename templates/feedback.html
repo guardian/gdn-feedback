@@ -6,13 +6,13 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-6">
-			<h1>Feedback</h1>
+			<h1>Provide feedback</h1>
 
 			{% if show_summary %}
 			<p>You have requested this feedback and can see the <a href="/request/{{request.key.urlsafe()}}/summary">summary</a></p>
 			{% endif %}
 
-			<p>Provide feedback for <em>{{request.subject.name}}</em> for the <em>{{request.description}}</em></p>
+			<p>Provide feedback for <em>{{request.subject.get().name}}</em> as part of their <em>{{request.description}}</em></p>
 
 			{% if saved %}
 			<p class="text-success"><strong>Your feedback has been saved</strong></p>
