@@ -2,6 +2,10 @@
 
 {% block title %}Everyone{% endblock %}
 
+{% block navbar_additional_links %}
+	<li><a href="/person">Add new person</a></li>
+{% endblock %}
+
 {% block content %}
 <div class="container">
 	{% for person in people %}
