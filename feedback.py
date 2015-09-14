@@ -5,9 +5,9 @@ formats = {
 }
 
 standard_questions = [
-	'What should they keep doing?',
-	'What should they stop doing?',
-	'What should they start doing?'
+	'What have they done well?',
+	'What would enable them to achieve more?',
+	'What should they try doing or do more of?'
 ]
 
 def summarise_feedback(responses):
