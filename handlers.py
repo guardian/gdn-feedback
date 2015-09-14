@@ -52,9 +52,15 @@ class YourRequests(webapp2.RequestHandler):
 		user = users.get_current_user()
 
 		template = jinja_environment.get_template('request/list.html')
+
+		def decorate_feedback_requests(request):
+			request.respondent_count = models.respondents_count(request)
+			return request
 		
+		outstanding_requests = map(decorate_feedback_requests, models.requests(user))
+
 		template_values = {
-			'requests': models.requests(user)
+			'requests': outstanding_requests
 		}
 
 		self.response.out.write(template.render(template_values))

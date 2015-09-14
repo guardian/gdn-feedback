@@ -66,3 +66,6 @@ def requests(user):
 
 def all_feedback(request):
 	return Feedback.query().filter(Feedback.request == request.key)
+
+def respondents_count(request):
+	return len({feedback.provider for feedback in Feedback.query(Feedback.request == request.key)})
