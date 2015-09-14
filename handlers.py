@@ -8,6 +8,8 @@ from urllib import quote, urlencode
 from google.appengine.api import urlfetch, users
 from google.appengine.ext import ndb
 
+import isodate
+
 import models
 import feedback
 import handlers
@@ -21,9 +23,6 @@ class RequestFeedbackOnPerson(webapp2.RequestHandler):
 
 		user = users.get_current_user()
 		person = models.read(person_id)
-
-		logging.info(user)
-		logging.info(person)
 		
 		template_values = {
 			'person': person,
@@ -35,13 +34,18 @@ class RequestFeedbackOnPerson(webapp2.RequestHandler):
 		user = users.get_current_user()
 
 		description = self.request.POST.get('description')
+		due_date = self.request.POST.get('due_date')
+
+		if due_date:
+			due_date = isodate.parse_date(due_date)
 
 		person = models.read(person_id)
 
 		request = models.feedback_request(user,
 			person,
 			description,
-			feedback.standard_questions)
+			feedback.standard_questions,
+			due_date)
 
 		request.put()
 

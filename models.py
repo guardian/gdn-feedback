@@ -19,6 +19,7 @@ class FeedbackRequest(ndb.Model):
 	description = ndb.StringProperty()
 	questions = ndb.StringProperty(repeated=True)
 	active = ndb.BooleanProperty(default=True)
+	due_date = ndb.DateProperty()
 
 class Feedback(ndb.Model):
 	provider = ndb.UserProperty(required=True)
@@ -26,13 +27,16 @@ class Feedback(ndb.Model):
 	question = ndb.StringProperty(required=True)
 	feedback = ndb.StringProperty(required=True)
 
-def feedback_request(requester, subject, description, questions=None):
+def feedback_request(requester, subject, description, questions=None, due_date=None):
 	request = FeedbackRequest(requester=requester,
 		subject=subject.key,
 		description=description)
 
 	if questions:
 		request.questions = questions
+
+	if due_date:
+		request.due_date = due_date
 
 	return request
 
@@ -51,7 +55,7 @@ def current_feedback(provider, request):
 	feedback = {}
 
 	for q in request.questions:
-		logging.info(q)
+		#logging.info(q)
 		current_feedback = Feedback.query().filter(Feedback.provider == provider).filter(Feedback.request == request.key).filter(Feedback.question == q).get()
 		if current_feedback:
 			feedback[q] = current_feedback.feedback
