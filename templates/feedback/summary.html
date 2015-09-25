@@ -10,6 +10,8 @@
 			<h1>{{request.subject.get().name}}</h1>
 			<p>{{request.description}}</p>
 			<p>Current responders: {{respondees | join(", ")}}</p>
+
+			<p><a href="#copy-ready">Cut and paste view</a></p>
 		</div>
 
 		{% if summary %}
@@ -31,8 +33,7 @@
 		{% endfor %}
 
 		{% if responses %}
-		<div class="col-md-12"><h2>Breakdown</h2></div>
-		{% endif %}
+		<div id="breakdown" class="col-md-12"><h2>Breakdown</h2></div>
 
 		{% for response in responses %}
 		<div class="col-md-12">
@@ -43,6 +44,22 @@
 			</ul>
 		</div>
 		{% endfor %}
+
+		{% endif %}
+
+		{% if summary %}
+		<div class="col-md-12">
+			<h2 id="copy-ready">Cut and paste</h2>
+			{% for question in summary.keys() %}
+			<section>
+				<h3>{{question}}</h3>
+				<textarea readonly class="form-control" rows="3">{% for feedback in summary[question] %}{{feedback}}&#13;&#10;{% endfor %}</textarea>
+
+			</section>
+			{% endfor %}
+		</div>
+		{% endif %}
+
 	</div>
 
 </div>

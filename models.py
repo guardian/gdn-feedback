@@ -20,6 +20,7 @@ class FeedbackRequest(ndb.Model):
 	questions = ndb.StringProperty(repeated=True)
 	active = ndb.BooleanProperty(default=True)
 	due_date = ndb.DateProperty()
+	invited = ndb.StringProperty(repeated=True)
 
 class Feedback(ndb.Model):
 	provider = ndb.UserProperty(required=True)
@@ -66,10 +67,14 @@ def everyone():
 	return Person.query().order(Person.name)
 
 def requests(user):
-	return FeedbackRequest.query().filter(FeedbackRequest.requester == user)
+	return FeedbackRequest.query().filter(FeedbackRequest.requester == user).order(FeedbackRequest.description)
 
 def all_feedback(request):
 	return Feedback.query().filter(Feedback.request == request.key)
 
 def respondents_count(request):
 	return len({feedback.provider for feedback in Feedback.query(Feedback.request == request.key)})
+
+def outstanding_requests(user):
+	return FeedbackRequest.query().filter(FeedbackRequest.active == True)\
+		.filter(FeedbackRequest.invited == user.email())

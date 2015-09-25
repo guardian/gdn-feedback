@@ -89,3 +89,16 @@ class FeedbackSummary(webapp2.RequestHandler):
 		}
 
 		self.response.out.write(template.render(template_values))
+
+class FeedbackInvitations(webapp2.RequestHandler):
+	def get(self):
+		user = users.get_current_user()
+		feedback_requests = models.outstanding_requests(user)
+
+		template = jinja_environment.get_template('feedback/outstanding.html')
+
+		template_values = {
+			'requests': feedback_requests,
+		}
+
+		self.response.out.write(template.render(template_values))

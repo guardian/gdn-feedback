@@ -10,6 +10,19 @@
 
 			{% if show_summary %}
 			<p>You have requested this feedback and can see the <a href="/request/{{request.key.urlsafe()}}/summary">summary</a></p>
+
+			<form method="POST" action="/feedback/invitations">
+
+				<div class="form-group">
+				<label for="emails">Invite people via email</label>
+				<input type="text" id="emails" name="emails" class="form-control" required>
+				</div>
+
+				<div class="form-group">
+				<button class="btn btn-default">Invite</button>
+				</div>
+			</form>
+
 			{% endif %}
 
 			<p>Provide feedback for <em>{{request.subject.get().name}}</em> as part of their <em>{{request.description}}</em></p>

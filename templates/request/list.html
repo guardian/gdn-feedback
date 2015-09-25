@@ -7,7 +7,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			{% for request in requests %}
-			<p><a href="/request/{{request.key.urlsafe()}}">{{request.subject.get().name}} - {{request.description}} - ({{request.respondent_count}})</a></p>
+			<p><a href="/request/{{request.key.urlsafe()}}">{{request.subject.get().name}} - {{request.description}}</a> &mdash; <a href="/request/{{request.key.urlsafe()}}/summary">summary ({{request.respondent_count}})</a></p>
 			{% endfor %}
 		</div>
 

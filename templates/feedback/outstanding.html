@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Everyone{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+
+			{% if not feedback_requests %}
+			<p>You have no outstanding feedback requests. Good work!</p>
+			{% endif %}
+
+			{% for request in feedback_requests %}
+			<p><a href="/request/{{request.key.urlsafe()}}">{{request.subject.get().name}} - {{request.description}}</a></p>
+			{% endfor %}
+		</div>
+
+	</div>
+
+
+</div>
+
+{% endblock %}
