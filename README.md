@@ -1,21 +1,11 @@
-simply-py
-=========
+# Feedback
 
-A simple blueprint for creating python apps in Google App Engine
+A simple application to gather feedback and be able to present the feedback in a variety of ways.
 
-## Creating configuration data
+It is primarily a managerial tool for understanding who has provided feedback and what feedback is outstanding.
 
-You can use the Configuration model to store private details such as API keys.
+## Running the app
 
-To do this you also need to enable the remote shell feature by adding the following to your app.yaml:
+This is a Google Appengine app written in Python and is bound to the Guardian's Google domain instance. If you're using OSX I would recommend just using the Appengine launcher app.
 
-	builtins:
-	- remote_api: on
-
-You can then connect to your shell and create the first piece of config:
-
-	from models import Configuration
-	config = Configuration(id="<your lookup key>" key="<your lookup key>", value="<your value>")
-	config.put()
-
-Once this value has been created you can then create other configuration via the Data Viewer.
+You need to create data locally before you use it.
