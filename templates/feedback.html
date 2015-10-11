@@ -11,7 +11,7 @@
 			{% if show_summary %}
 			<p>You have requested this feedback and can see the <a href="/request/{{request.key.urlsafe()}}/summary">summary</a></p>
 
-			<form method="POST" action="/feedback/invitations">
+			<form method="POST" action="/feedback/invitation/{{request.key.urlsafe()}}">
 
 				<div class="form-group">
 				<label for="emails">Invite people via email</label>

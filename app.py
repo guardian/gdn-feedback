@@ -163,4 +163,5 @@ app = webapp2.WSGIApplication([
 	webapp2.Route(r'/person/<person_id>/request', handler=handlers.RequestFeedbackOnPerson),
 	webapp2.Route(r'/requests', handler=handlers.YourRequests),
 	webapp2.Route(r'/feedback/outstanding', handler=handlers.FeedbackInvitations),
+	webapp2.Route(r'/feedback/invitation/<request_id>', handler=handlers.FeedbackInvitation),
 	], debug=True)

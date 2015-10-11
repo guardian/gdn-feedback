@@ -76,5 +76,6 @@ def respondents_count(request):
 	return len({feedback.provider for feedback in Feedback.query(Feedback.request == request.key)})
 
 def outstanding_requests(user):
+	logging.info(user.email())
 	return FeedbackRequest.query().filter(FeedbackRequest.active == True)\
 		.filter(FeedbackRequest.invited == user.email())

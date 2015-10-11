@@ -98,7 +98,26 @@ class FeedbackInvitations(webapp2.RequestHandler):
 		template = jinja_environment.get_template('feedback/outstanding.html')
 
 		template_values = {
-			'requests': feedback_requests,
+			'feedback_requests': feedback_requests,
 		}
 
 		self.response.out.write(template.render(template_values))
+
+class FeedbackInvitation(webapp2.RequestHandler):
+	def post(self, request_id):
+		user = users.get_current_user()
+
+		feedback_request = models.read(request_id)
+
+		emails = self.request.POST.get('emails')
+
+		if emails:
+			emails = emails.split(",")
+			emails = map(lambda s: s.strip(), emails)
+
+		feedback_request.invited.extend(emails)
+		feedback_request.put()
+
+		return webapp2.redirect('/request/' + request_id)
+
+		

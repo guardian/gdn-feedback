@@ -50,6 +50,11 @@
 		{% if summary %}
 		<div class="col-md-12">
 			<h2 id="copy-ready">Cut and paste</h2>
+
+			<h3>Questions</h3>
+
+			<textarea readonly class="form-control" rows="3">{{summary.keys() | join('\n')}}</textarea>
+
 			{% for question in summary.keys() %}
 			<section>
 				<h3>{{question}}</h3>
