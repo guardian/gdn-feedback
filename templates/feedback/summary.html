@@ -11,7 +11,7 @@
 			<p>{{request.description}}</p>
 			<p>Current responders: {{respondees | join(", ")}}</p>
 
-			<p><a href="#copy-ready">Cut and paste view</a></p>
+			<p><a href="/request/{{request.key.urlsafe()}}/summary/text">Text view</a></p>
 		</div>
 
 		{% if summary %}

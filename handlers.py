@@ -13,6 +13,7 @@ import isodate
 import models
 import feedback
 import handlers
+import headers
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
@@ -89,6 +90,27 @@ class FeedbackSummary(webapp2.RequestHandler):
 		}
 
 		self.response.out.write(template.render(template_values))
+
+class FeedbackSummaryText(webapp2.RequestHandler):
+	def get(self, request_id):
+		user = users.get_current_user()
+		request = models.read(request_id)
+
+		if request.requester != user:
+			return webapp2.redirect('/dashboard')
+
+		template = jinja_environment.get_template('feedback/summary.txt')
+
+		responses = models.all_feedback(request)
+		
+		template_values = {
+			'summary': feedback.summarise_feedback(responses),
+		}
+
+		headers.text(self.response)
+
+		self.response.out.write(template.render(template_values))
+
 
 class FeedbackInvitations(webapp2.RequestHandler):
 	def get(self):

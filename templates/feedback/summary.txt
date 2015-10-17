@@ -1,0 +1,8 @@
+{% for question in summary.keys() %}
+{{question}}
+
+{% for feedback in summary[question] %}
+{{feedback}}
+{% endfor %}
+
+{% endfor %}
