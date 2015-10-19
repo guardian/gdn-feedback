@@ -142,4 +142,61 @@ class FeedbackInvitation(webapp2.RequestHandler):
 
 		return webapp2.redirect('/request/' + request_id)
 
-		
+
+class Feedback(webapp2.RequestHandler):
+	def get(self, request_id):
+		template = jinja_environment.get_template('feedback.html')
+
+		user = users.get_current_user()
+
+		template_values = {
+			'feedback': {},
+			'show_summary': False,
+			'saved': False,
+			'show_delete': False,
+		}
+
+
+		request = models.read(request_id)
+
+
+		template_values['request'] = request
+		template_values['feedback'] = models.current_feedback(user, request)
+
+		if request.requester == user:
+			template_values['show_summary'] = True
+
+		status = self.request.get('status')
+
+		if status == 'saved':
+			template_values['saved'] = True
+
+		if models.respondents_count(request) < 1:
+			template_values['show_delete'] = True
+
+		self.response.out.write(template.render(template_values))
+
+	def post(self, request_id):
+		user = users.get_current_user()
+		request = models.read(request_id)
+
+		for q in request.questions:
+			feedback = self.request.POST.get(q)
+			if not feedback:
+				continue
+
+			saved_feedback = models.feedback(user, request, q, feedback)
+
+			saved_feedback.feedback = feedback
+			saved_feedback.put()
+
+		return webapp2.redirect('/request/{0}?status=saved'.format(request_id))
+
+class DeleteFeedback(webapp2.RequestHandler):
+
+	def post(self, request_id):
+		user = users.get_current_user()
+		request = models.delete_request(request_id)
+
+		return webapp2.redirect('/dashboard')
+

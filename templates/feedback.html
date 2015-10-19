@@ -23,6 +23,15 @@
 				</div>
 			</form>
 
+			{% if show_delete %}
+			<form method="POST" action="/request/{{request.key.urlsafe()}}/delete">
+				<div class="form-group">
+				<button class="btn btn-default">Delete request</button>
+				</div>
+			</form>
+
+			{% endif %}
+
 			{% endif %}
 
 			<p>Provide feedback for <em>{{request.subject.get().name}}</em> as part of their <em>{{request.description}}</em></p>
