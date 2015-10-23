@@ -32,6 +32,17 @@
 
 			{% endif %}
 
+			<form method="POST" action="/request/{{request.key.urlsafe()}}/status">
+			{% if request.active %}
+				<input type="hidden" name="status" value="inactive">
+			{% else %}
+				<input type="hidden" name="status" value="active">
+			{% endif %}
+				<div class="form-group">
+				<button class="btn btn-default">{% if request.active %}Deactivate{% else %}Activate{% endif %}</button>
+				</div>
+			</form>
+
 			{% endif %}
 
 			<p>Provide feedback for <em>{{request.subject.get().name}}</em> as part of their <em>{{request.description}}</em></p>

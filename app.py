@@ -114,6 +114,7 @@ app = webapp2.WSGIApplication([
 	webapp2.Route(r'/request/<request_id>/summary', handler=handlers.FeedbackSummary),
 	webapp2.Route(r'/request/<request_id>/summary/text', handler=handlers.FeedbackSummaryText),
 	webapp2.Route(r'/request/<request_id>/delete', handler=handlers.DeleteFeedback),
+	webapp2.Route(r'/request/<request_id>/status', handler=handlers.FeedbackStatus),
 	webapp2.Route(r'/people', handler=People),
 	webapp2.Route(r'/person', handler=NewPerson),
 	webapp2.Route(r'/person/<key>', handler=Person),

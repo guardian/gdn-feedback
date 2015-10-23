@@ -84,3 +84,10 @@ def delete_request(request_id):
 	if respondents_count(request) < 1:
 		request.key.delete()
 	return request
+
+def status(user, request_id, status):
+	request = read(request_id)
+	request.active = status
+	request.put()
+
+	return request

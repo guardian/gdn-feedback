@@ -200,3 +200,15 @@ class DeleteFeedback(webapp2.RequestHandler):
 
 		return webapp2.redirect('/dashboard')
 
+class FeedbackStatus(webapp2.RequestHandler):
+
+	def post(self, request_id):
+		user = users.get_current_user()
+
+		status_label = self.request.get('status', 'active')
+		logging.info(status_label)
+
+		status = True if status_label == 'active' else False
+		request = models.status(user, request_id, status)
+
+		return webapp2.redirect('/request/{0}'.format(request_id))
