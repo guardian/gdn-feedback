@@ -67,9 +67,12 @@ def everyone():
 	return Person.query().order(Person.name)
 
 def requests(user):
-	return FeedbackRequest.query().filter(FeedbackRequest.requester == user).order(FeedbackRequest.description)
+	return FeedbackRequest.query().filter(FeedbackRequest.requester == user).filter(FeedbackRequest.active == True).order(FeedbackRequest.description)
 
 def all_feedback(request):
+	return Feedback.query().filter(Feedback.request == request.key, Feedback.active == True)
+
+def active_feedback(request):
 	return Feedback.query().filter(Feedback.request == request.key)
 
 def respondents_count(request):

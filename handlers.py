@@ -80,7 +80,7 @@ class FeedbackSummary(webapp2.RequestHandler):
 
 		template = jinja_environment.get_template('feedback/summary.html')
 
-		responses = models.all_feedback(request)
+		responses = models.active_feedback(request)
 		
 		template_values = {
 			'request': request,

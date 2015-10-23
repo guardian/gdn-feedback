@@ -12,5 +12,11 @@ indexes:
 
 - kind: FeedbackRequest
   properties:
+  - name: active
+  - name: requester
+  - name: description
+
+- kind: FeedbackRequest
+  properties:
   - name: requester
   - name: description
