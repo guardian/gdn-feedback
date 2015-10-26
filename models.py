@@ -70,7 +70,7 @@ def requests(user):
 	return FeedbackRequest.query().filter(FeedbackRequest.requester == user).filter(FeedbackRequest.active == True).order(FeedbackRequest.description)
 
 def all_feedback(request):
-	return Feedback.query().filter(Feedback.request == request.key, Feedback.active == True)
+	return Feedback.query().filter(Feedback.request == request.key)
 
 def active_feedback(request):
 	return Feedback.query().filter(Feedback.request == request.key)
