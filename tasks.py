@@ -18,9 +18,12 @@ jinja_environment = jinja2.Environment(
 class EmailFeedbackInvitation(webapp2.RequestHandler):
 	def post(self):
 		send_to = self.request.get('to')
-		feedback_request = self.request.get('feedback_request')
+		message = self.request.get('message')
+
 		logging.info(send_to)
-		logging.info(feedback_request)
+		logging.info(message)
+
+		email = models.email.Message(to=send_to, message=message)
 
 		self.response.out.write("Hello world")
 

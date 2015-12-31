@@ -2,6 +2,8 @@ import logging
 
 from google.appengine.ext import ndb
 
+import email
+
 def read(urlsafe_key):
 	return ndb.Key(urlsafe=urlsafe_key).get()
 

@@ -139,9 +139,15 @@ class FeedbackInvitation(webapp2.RequestHandler):
 			emails = map(lambda s: s.strip(), emails)
 
 			for email in emails:
+
+				message = '''You've been invited to give feedback to  {subject.name} as part of {feedback_request.description}
+				'''.format(feedback_request=feedback_request, subject=feedback_request.subject.get())
+
+				logging.info(message)
+
 				payload = {
 					'to': email,
-					'feedback_request': feedback_request,
+					'message': message,
 				}
 
 				taskqueue.add(url='/tasks/email/feedback/invite',
