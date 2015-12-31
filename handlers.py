@@ -7,6 +7,7 @@ from urllib import quote, urlencode
 
 from google.appengine.api import urlfetch, users
 from google.appengine.ext import ndb
+from google.appengine.api import taskqueue
 
 import isodate
 
@@ -136,6 +137,17 @@ class FeedbackInvitation(webapp2.RequestHandler):
 		if emails:
 			emails = emails.split(",")
 			emails = map(lambda s: s.strip(), emails)
+
+			for email in emails:
+				payload = {
+					'to': email,
+					'feedback_request': feedback_request,
+				}
+
+				taskqueue.add(url='/tasks/email/feedback/invite',
+					queue_name='email',
+					params=payload)
+
 
 		feedback_request.invited.extend(emails)
 		feedback_request.put()

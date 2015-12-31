@@ -8,6 +8,9 @@ handlers:
 - url: /static
   secure: always
   static_dir: static
+- url: /tasks/.*
+  script: tasks.app
+  login: admin
 - url: /admin/.*
   script: admin.app
   login: admin
