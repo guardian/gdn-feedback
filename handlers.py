@@ -138,11 +138,16 @@ class FeedbackInvitation(webapp2.RequestHandler):
 			emails = emails.split(",")
 			emails = map(lambda s: s.strip(), emails)
 
+			email_template = jinja_environment.get_template('emails/invitation.txt')
+
 			for email in emails:
 
-				message = '''You've been invited to give feedback to  {subject.name} as part of {feedback_request.description}
-				'''.format(feedback_request=feedback_request, subject=feedback_request.subject.get())
+				email_template_values = {
+					'feedback_request': feedback_request,
+					'subject': feedback_request.subject.get(),
+				}
 
+				message = email_template.render(email_template_values)
 				logging.info(message)
 
 				payload = {
