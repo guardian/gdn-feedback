@@ -19,13 +19,16 @@ class EmailFeedbackInvitation(webapp2.RequestHandler):
 	def post(self):
 		send_to = self.request.get('to')
 		message = self.request.get('message')
+		subject = self.request.get('subject')
 
 		logging.info(send_to)
 		logging.info(message)
+		logging.info(subject)
 
-		email = models.email.Message(to=send_to, message=message)
+		email = models.email.Message(to=send_to, subject=subject, message=message)
+		email.put()
 
-		self.response.out.write("Hello world")
+		self.response.out.write("Invitation stored")
 
 
 app = webapp2.WSGIApplication([

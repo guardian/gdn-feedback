@@ -139,12 +139,13 @@ class FeedbackInvitation(webapp2.RequestHandler):
 			emails = map(lambda s: s.strip(), emails)
 
 			email_template = jinja_environment.get_template('emails/invitation.txt')
+			feedback_recipient = feedback_request.subject.get()
 
 			for email in emails:
 
 				email_template_values = {
 					'feedback_request': feedback_request,
-					'subject': feedback_request.subject.get(),
+					'subject': feedback_recipient,
 				}
 
 				message = email_template.render(email_template_values)
@@ -152,6 +153,7 @@ class FeedbackInvitation(webapp2.RequestHandler):
 
 				payload = {
 					'to': email,
+					'subject': "Feedback request for {0.name}".format(feedback_recipient),
 					'message': message,
 				}
 
