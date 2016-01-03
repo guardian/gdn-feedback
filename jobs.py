@@ -7,18 +7,27 @@ from urllib import quote, urlencode
 
 from google.appengine.api import urlfetch, users
 from google.appengine.ext import ndb
+from google.appengine.api import mail
 
 import models
 import feedback
 import handlers
 import headers
-
+import configuration
 
 class SendEmails(webapp2.RequestHandler):
 	def get(self):
 		emails_to_send = models.email.unsent_emails()
 
 		logging.info(emails_to_send)
+
+		sender_address = configuration.lookup('EMAIL_FROM')
+
+		for email in emails_to_send:
+			mail.send_mail(sender_address, email.to, email.subject, email.message)
+			logging.info(email)
+			email.sent = True
+			email.put()
 
 		headers.json(self.response)
 
