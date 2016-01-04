@@ -7,6 +7,7 @@ from urllib import quote, urlencode
 
 from google.appengine.api import urlfetch, users
 from google.appengine.ext import ndb
+from google.appengine.api import taskqueue
 
 import isodate
 
@@ -136,6 +137,30 @@ class FeedbackInvitation(webapp2.RequestHandler):
 		if emails:
 			emails = emails.split(",")
 			emails = map(lambda s: s.strip(), emails)
+
+			email_template = jinja_environment.get_template('emails/invitation.txt')
+			feedback_recipient = feedback_request.subject.get()
+
+			for email in emails:
+
+				email_template_values = {
+					'feedback_request': feedback_request,
+					'subject': feedback_recipient,
+				}
+
+				message = email_template.render(email_template_values)
+				logging.info(message)
+
+				payload = {
+					'to': email,
+					'subject': "Feedback request for {0.name}".format(feedback_recipient),
+					'message': message,
+				}
+
+				taskqueue.add(url='/tasks/email/feedback/invite',
+					queue_name='email',
+					params=payload)
+
 
 		feedback_request.invited.extend(emails)
 		feedback_request.put()
