@@ -6,8 +6,8 @@ formats = {
 
 standard_questions = [
 	'What have they done well?',
-	'What would enable them to achieve more?',
-	'What should they try doing or do more of?'
+	'What should they try doing or do more of?',
+	'What do need from the organisation, management or other team members?',
 ]
 
 def summarise_feedback(responses):

@@ -52,6 +52,8 @@ class RequestFeedback(webapp2.RequestHandler):
 	def post(self):
 		user = users.get_current_user()
 
+		person_id = self.request.POST.get('person_key')
+
 		description = self.request.POST.get('description')
 
 		person = models.read(person_id)

@@ -1,0 +1,4 @@
+cron:
+- description: send emails
+  url: /jobs/email/send
+  schedule: every 10 minutes
